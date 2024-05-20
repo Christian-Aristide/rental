@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:luxury_rental_car/home_screen.dart';
 // import 'package:rental/screens/acceuil/home_screen.dart';
-import 'package:rental/screens/navigation_bar.dart'; // Importez le fichier home_screen.dart que nous allons créer ensuite
+import 'package:rental/screens/navigation_bar.dart';
+import 'package:rental/screens/recherche/search_screen.dart'; // Importez le fichier home_screen.dart que nous allons créer ensuite
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -18,7 +19,8 @@ class _SplashScreenState extends State<SplashScreen> {
       // Naviguez vers la page d'accueil une fois que le temps est écoulé
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => BottomNavigationBarPage()),
+        // MaterialPageRoute(builder: (context) => BottomNavigationBarPage()),
+        MaterialPageRoute(builder: (context) => EnlargeStrategyZoomDemo()),
       );
     });
   }

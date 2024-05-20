@@ -13,8 +13,9 @@ class _BottomNavigationBarPageState extends State<BottomNavigationBarPage> {
 
   final List<Widget> _pages = [
     HomePage(),
-    SearchPage(),
-    InfosPage(),
+    // SearchPage(),
+    // InfosPage(),
+    LuxuryCarRentalPage(),
   ];
 
   @override
