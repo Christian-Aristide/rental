@@ -1,80 +1,59 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:rental/screens/acceuil/brand_card.dart.dart';
 
-// void main() {
-//   runApp(MyApp());
-// }
 
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Meilleure marque',
-//       home: HomePage(),
-//     );
-//   }
-// }
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
-class HomePage extends StatelessWidget {
+class _HomePageState extends State<HomePage> {
+  final String apiUrl = "http://192.168.56.1/gstock-dclic/api/marque_vehicule.php";
+
+  Future<List<dynamic>> fetchArticles() async {
+    try {
+      var result = await http.get(Uri.parse(apiUrl));
+      return json.decode(result.body);
+    } catch (e) {
+      print('Erreur lors de la récupération des données: $e');
+      return [];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Meilleure marque'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Image.asset('assets/bmw_logo.png'),
-              Image.asset('assets/rolls_royce_logo.png'),
-              Image.asset('assets/ferrari_logo.png'),
-              Image.asset('assets/bentley_logo.png'),
-            ],
-          ),
-          SizedBox(height: 20),
-          Text(
-            'Véhicule populaire',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          Image.asset('assets/vehicule/aston_martin.jpeg'),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.settings),
-              Text('Automatique'),
-              SizedBox(width: 10),
-              Icon(Icons.battery_charging_full),
-              Text('Electrique'),
-            ],
-          ),
-          Text(
-            '150XOF/J',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18),
-          ),
-          SizedBox(height: 20),
-          Image.asset('assets/vehicule/aston_martin.jpeg'),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.settings),
-              Text('Automatique'),
-              SizedBox(width: 10),
-              Icon(Icons.battery_charging_full),
-              Text('Electrique'),
-            ],
-          ),
-          Text(
-            '80XOF/J',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18),
-          ),
-        ],
+      body: Container(
+        color: Colors.amber,
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 2),
+        child: FutureBuilder<List<dynamic>>(
+          future: fetchArticles(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Erreur: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data.isEmpty) {
+              return Center(child: Text('Aucune marque trouvée'));
+            } else {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: snapshot.data.map<Widget>((article) {
+                    var imageUrl = article['images'] != null
+                        ? Uri.encodeFull(article['images'])
+                        : '';
+                    var brandName = article['libelle_categorie'];
+
+                    return BrandCard(brandLogo: imageUrl, brandName: brandName);
+                  }).toList(),
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

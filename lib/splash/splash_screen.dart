@@ -17,11 +17,11 @@ class _SplashScreenState extends State<SplashScreen> {
     // Ajoutez une temporisation pour afficher le Splash Screen pendant 5 secondes
     Future.delayed(Duration(seconds: 5), () {
       // Naviguez vers la page d'accueil une fois que le temps est écoulé
-      Navigator.pushReplacement(
-        context,
-        // MaterialPageRoute(builder: (context) => BottomNavigationBarPage()),
-        MaterialPageRoute(builder: (context) => EnlargeStrategyZoomDemo()),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   // MaterialPageRoute(builder: (context) => BottomNavigationBarPage()),
+      //   MaterialPageRoute(builder: (context) => EnlargeStrategyZoomDemo()),
+      // );
     });
   }
 
