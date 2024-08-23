@@ -14,8 +14,8 @@ class BrandCard extends StatelessWidget {
         side: BorderSide(color: Color(0xFFC67B17)),
       ),
       child: Container(
-        width: 120.0,
-        height: 120.0,
+        width: 100.0,
+        height: 100.0,
         child: Image.asset(brandLogo),
       ),
     );

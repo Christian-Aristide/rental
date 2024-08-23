@@ -14,7 +14,7 @@ class ArticleList extends StatefulWidget {
 }
 
 class _ArticleListState extends State<ArticleList> {
-  final String apiUrl = "http://192.168.56.1/gstock-dclic/api/get_articles.php";
+  final String apiUrl = "http://192.168.43.135/luxrencar/api/get_articles.php";
 
   Future<List<dynamic>> fetchArticles() async {
     try {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental/screens/acceuil/articleListe.dart';
 import 'package:rental/screens/acceuil/home_screen.dart';
 import 'package:rental/screens/infos/info_screen.dart';
 import 'package:rental/screens/recherche/search_screen.dart';
@@ -12,9 +13,9 @@ class _BottomNavigationBarPageState extends State<BottomNavigationBarPage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    HomePage(),
+    // HomePage(),
     // SearchPage(),
-    // InfosPage(),
+    ArticleList(),
     LuxuryCarRentalPage(),
   ];
 
@@ -43,10 +44,10 @@ class _BottomNavigationBarPageState extends State<BottomNavigationBarPage> {
               icon: Icon(Icons.home),
               label: 'Accueil',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Recherche',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.search),
+            //   label: 'Recherche',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.info),
               label: 'infos',

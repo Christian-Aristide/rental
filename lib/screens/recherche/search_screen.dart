@@ -20,7 +20,7 @@ class _SearchPageState extends State<SearchPage> {
       _errorMessage = '';
     });
 
-    final url = Uri.parse('http://192.168.56.1/gstock-dclic/api/search_articles.php?q=$query');
+    final url = Uri.parse('http://192.168.36.118/luxrencar/api/search_articles.php?q=$query');
     try {
       final response = await http.get(url);
 

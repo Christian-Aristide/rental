@@ -1,59 +1,42 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:rental/screens/acceuil/brand_card.dart.dart';
+import 'package:rental/widgets/brand_card.dart';
+import 'package:rental/widgets/vehicle_card.dart';
 
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final String apiUrl = "http://192.168.56.1/gstock-dclic/api/marque_vehicule.php";
-
-  Future<List<dynamic>> fetchArticles() async {
-    try {
-      var result = await http.get(Uri.parse(apiUrl));
-      return json.decode(result.body);
-    } catch (e) {
-      print('Erreur lors de la récupération des données: $e');
-      return [];
-    }
-  }
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.amber,
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 2),
-        child: FutureBuilder<List<dynamic>>(
-          future: fetchArticles(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Erreur: ${snapshot.error}'));
-            } else if (!snapshot.hasData || snapshot.data.isEmpty) {
-              return Center(child: Text('Aucune marque trouvée'));
-            } else {
-              return SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: snapshot.data.map<Widget>((article) {
-                    var imageUrl = article['images'] != null
-                        ? Uri.encodeFull(article['images'])
-                        : '';
-                    var brandName = article['libelle_categorie'];
+     
+      backgroundColor: Color(0xFFF8F2F2),
+      body: ListView(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
-                    return BrandCard(brandLogo: imageUrl, brandName: brandName);
-                  }).toList(),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      BrandCard(brandLogo: 'assets/marque_vehicule/rolls_royce_logo.jpeg'),
+                      BrandCard(brandLogo: 'assets/marque_vehicule/ferrari_logo.jpeg'),
+                      BrandCard(brandLogo: 'assets/marque_vehicule/lamborghini_logo.jpeg'),
+                      BrandCard(brandLogo: 'assets/marque_vehicule/bentley_logo.jpeg'),
+                      BrandCard(brandLogo: 'assets/marque_vehicule/aston_martin_logo.jpeg'),
+                      BrandCard(brandLogo: 'assets/marque_vehicule/bugatti_logo.jpeg'),
+                      BrandCard(brandLogo: 'assets/marque_vehicule/lexus_logo.jpeg'),
+                      BrandCard(brandLogo: 'assets/marque_vehicule/maserati_logo.jpeg'),
+                      BrandCard(brandLogo: 'assets/marque_vehicule/porsche_logo.jpeg'),
+                      // Ajoutez d'autres cartes de marque ici
+                    ],
+                  ),
                 ),
-              );
-            }
-          },
-        ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
